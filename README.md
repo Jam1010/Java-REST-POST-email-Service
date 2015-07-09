@@ -23,27 +23,40 @@ Change the 'to' email address in the integration tests from 'sriramkeerthy@gmail
 
 # Running the tests
 
-mvn clean test
+_mvn clean test_
 
 # Running the rest service
 
 To run using default email provider 'SendGrid'
 
-mvn exec:java (starts service in port 8080; port changeable in src/main/java/user/keerthy/Main.java)
+_mvn exec:java_ (starts service in port 8080; port changeable in src/main/java/user/keerthy/Main.java)
 
 To run using specific email provider
 
-mvn exec:java -DemailProvider=SendGrid
+_mvn exec:java -DemailProvider=SendGrid_
 
-mvn exec:java -DemailProvider=MailGun
+_mvn exec:java -DemailProvider=MailGun_
 
 # Sample command to send email once the server is up and running
 
-curl -X POST http://localhost:8080/email -d @emaildata.json -H "Content-Type: application/json" -v
+_cat > emaildata.json_
+
+```json
+{
+    "to": "sriramkeerthy@gmail.com",
+    "to_name": "Sriram Keerthy",
+    "from": "noreply@uber.com",
+    "from_name": "Uber",
+    "subject": "Test: A Message from Uber",
+    "body": "<h1>Your Bill</h1><p>$10</p>"
+}
+```
+
+_curl -X POST http://localhost:8080/email -d @emaildata.json -H "Content-Type: application/json" -v_
 
 # You can change the email provider without restarting the service
 
-curl -X POST http://localhost:8080/email/provider/MailGun -v
+_curl -X POST http://localhost:8080/email/provider/MailGun -v_
 
 # Why use Jersey, Apache HttpComponents, Jackson etc.
 
