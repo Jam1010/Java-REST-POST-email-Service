@@ -1,17 +1,19 @@
-package com.example;
+package usr.keerthy;
+
+import static org.junit.Assert.assertEquals;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 
 import org.glassfish.grizzly.http.server.HttpServer;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
-public class MyResourceTest {
+public class EmailProcessorIntegrationTest {
 
     private HttpServer server;
     private WebTarget target;
@@ -34,7 +36,7 @@ public class MyResourceTest {
 
     @After
     public void tearDown() throws Exception {
-        server.stop();
+        server.shutdownNow();
     }
 
     /**
@@ -42,7 +44,13 @@ public class MyResourceTest {
      */
     @Test
     public void testGetIt() {
-        String responseMsg = target.path("myresource").request().get(String.class);
-        assertEquals("Got it!", responseMsg);
+        Entity<String> emailJson = Entity.json("{\"to\":\"sriramkeerthy@gmail.com\","
+				+ "\"to_name\":\"sriram\","
+				+ "\"from\":\"noreply@uber.com\","
+				+ "\"from_name\":\"Uber\","
+				+ "\"subject\":\"Testing\","
+				+ "\"body\":\"<h1>Test Email Processor app</h1>\"}");
+		Response response = target.path("email").request().post(emailJson);
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 }

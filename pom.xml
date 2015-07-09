@@ -25,17 +25,40 @@
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-grizzly2-http</artifactId>
         </dependency>
-        <!-- uncomment this to get JSON support:
+        <!-- JSON support -->
          <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-moxy</artifactId>
         </dependency>
-        -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.9</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+        	<groupId>org.codehaus.jackson</groupId>
+        	<artifactId>jackson-mapper-asl</artifactId>
+        	<version>1.6.1</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.glassfish.jersey.core</groupId>
+        	<artifactId>jersey-client</artifactId>
+        	</dependency>
+        <dependency>
+        	<groupId>org.apache.httpcomponents</groupId>
+        	<artifactId>httpclient</artifactId>
+        	<version>4.5</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.easymock</groupId>
+        	<artifactId>easymock</artifactId>
+        	<version>3.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>commons-lang</groupId>
+        	<artifactId>commons-lang</artifactId>
+        	<version>2.6</version>
         </dependency>
     </dependencies>
 
@@ -63,7 +86,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.example.Main</mainClass>
+                    <mainClass>usr.keerthy.Main</mainClass>
+                    <arguments>
+                    	<argument>--emailProvider</argument>
+                    	<argument>${emailProvider}</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>
@@ -72,6 +99,8 @@
     <properties>
         <jersey.version>2.19</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Valid list of email providers can be found at usr.keerthy.email.EmailProviderFactory.emailProviders -->
+        <emailProvider>SendGrid</emailProvider>
     </properties>
     <groupId>usr.keerthy</groupId>
 </project>
